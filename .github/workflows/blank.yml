@@ -37,15 +37,25 @@ jobs:
         run: npm ci
       - name: Build
         run: npm run build
-      - name: Deploy
+      - name: GitHub Pages
+        # You may pin to the exact commit or the version.
+        # uses: crazy-max/ghaction-github-pages@a117e4aa1fb4854d021546d2abdfac95be568a3a
+        uses: crazy-max/ghaction-github-pages@v2.6.0
+        with:
+          target_branch: gh-pages
+          build_dir: public
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          cd ./docs/.vuepress/dist
-          echo $GITHUB_TOKEN
-          git init
-          git config user.name "Circle CI"
-          git config user.email "workflow-ci-deploy@github.com"
-          git add -A
-          git commit -m "documents: GitHub CI Automatic Deployment"
-          git push -f "https://x-access-token:${GITHUB_TOKEN}@github.com/dotkiro/articles.git" master:gh-pages
+        
+#       - name: Deploy
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#         run: 
+#           cd ./docs/.vuepress/dist
+#           echo $GITHUB_TOKEN
+#           git init
+#           git config user.name "Circle CI"
+#           git config user.email "workflow-ci-deploy@github.com"
+#           git add -A
+#           git commit -m "documents: GitHub CI Automatic Deployment"
+#           git push -f "https://x-access-token:${GITHUB_TOKEN}@github.com/dotkiro/articles.git" master:gh-pages
